@@ -6,7 +6,7 @@ from mcp.server import MCPServer
 from mcp.server.mcpserver.exceptions import ToolError
 from mcp.types import ToolAnnotations
 
-from .client import lookup_postal_code
+from .client import lookup_business_postal_code, lookup_postal_code, search_postal_codes
 
 READ_ONLY = ToolAnnotations(
     read_only_hint=True, idempotent_hint=True, destructive_hint=False, open_world_hint=True
@@ -27,4 +27,6 @@ def _tool_errors[**P, R](function: Callable[P, Awaitable[R]]) -> Callable[P, Awa
 def create_server() -> MCPServer:
     mcp = MCPServer("jp-postal-code-mcp")
     mcp.tool(annotations=READ_ONLY)(_tool_errors(lookup_postal_code))
+    mcp.tool(annotations=READ_ONLY)(_tool_errors(search_postal_codes))
+    mcp.tool(annotations=READ_ONLY)(_tool_errors(lookup_business_postal_code))
     return mcp

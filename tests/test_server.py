@@ -11,6 +11,10 @@ async def test_stdio_tool_contract() -> None:
     params = StdioServerParameters(command=sys.executable, args=["-m", "jp_postal_code_mcp"])
     async with Client(params, mode="legacy", read_timeout_seconds=10) as client:
         result = await client.list_tools()
-    assert {tool.name for tool in result.tools} == {"lookup_postal_code"}
+    assert {tool.name for tool in result.tools} == {
+        "lookup_business_postal_code",
+        "lookup_postal_code",
+        "search_postal_codes",
+    }
     assert all(tool.annotations and tool.annotations.read_only_hint for tool in result.tools)
-    assert len(await create_server().list_tools()) == 1
+    assert len(await create_server().list_tools()) == 3
