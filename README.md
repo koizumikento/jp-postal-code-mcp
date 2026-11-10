@@ -2,6 +2,8 @@
 
 日本郵便の公開データから、郵便番号に対応する町域や、住所に対応する郵便番号を調べられます。大口事業所や私書箱の個別郵便番号も照会できます。
 
+[MCP登録](#mcpクライアントに登録する) · [CLI](#cliで使う) · [Pythonライブラリ](#pythonライブラリとして使う)
+
 ## 利用前に
 
 [uv](https://docs.astral.sh/uv/) と Git が必要です。Python 3.12以上に対応しています。APIキーの設定は不要です。
@@ -76,17 +78,15 @@ uvx --python 3.12 --from git+https://github.com/koizumikento/jp-postal-code-mcp.
 uvx --python 3.12 --from git+https://github.com/koizumikento/jp-postal-code-mcp.git@main jp-postal-code-mcp lookup-business-postal-code --postal-code 060-8621
 ```
 
-## Pythonから呼び出す
+## Pythonライブラリとして使う
 
-リポジトリをクローンし、依存関係を準備します。
+自分のPythonプロジェクト（`pyproject.toml` があるディレクトリ）で依存関係に追加します。
 
 ```sh
-git clone https://github.com/koizumikento/jp-postal-code-mcp.git
-cd jp-postal-code-mcp
-uv sync --locked
+uv add "git+https://github.com/koizumikento/jp-postal-code-mcp.git@main"
 ```
 
-次の例を `example.py` に保存し、クローン先で `uv run --locked python example.py` を実行します。
+次のコードを `example.py` に保存し、同じディレクトリで `uv run python example.py` を実行します。
 
 ```python
 import asyncio
